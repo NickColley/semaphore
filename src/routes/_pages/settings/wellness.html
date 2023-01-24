@@ -22,6 +22,11 @@
       {intl.hideFollowerCount}
     </label>
     <label class="setting-group">
+      <input type="checkbox" id="choice-disable-reply-counts"
+             bind:checked="$disableReplyCounts" on:change="onChange(event)">
+      {intl.hideReplyCount}
+    </label>
+    <label class="setting-group">
       <input type="checkbox" id="choice-disable-reblog-counts"
              bind:checked="$disableReblogCounts" on:change="onChange(event)">
       {intl.hideReblogCount}
@@ -92,6 +97,7 @@
       flushChangesToCheckAll () {
         const {
           disableFollowerCounts,
+          disableReplyCounts,
           disableReblogCounts,
           disableFavCounts,
           disableNotificationBadge,
@@ -99,6 +105,7 @@
           enableGrayscale
         } = this.store.get()
         document.querySelector('#choice-check-all').checked = disableFollowerCounts &&
+          disableReplyCounts &&
           disableReblogCounts &&
           disableFavCounts &&
           disableNotificationBadge &&
@@ -109,6 +116,7 @@
         const { checked } = e.target
         this.store.set({
           disableFollowerCounts: checked,
+          disableReplyCounts: checked,
           disableReblogCounts: checked,
           disableFavCounts: checked,
           disableNotificationBadge: checked,

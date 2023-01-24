@@ -1,3 +1,5 @@
+<!-- LOCAL: this is the main toolbar underneath each toot in every view.
+      TODO: add reblog and favorite counts here, remove them from StatusDetails.html -->
 <div class="status-toolbar {isStatusInOwnThread ? 'status-in-own-thread' : ''}" ref:node>
   <IconButton
     className="status-toolbar-reply-button"
@@ -9,9 +11,15 @@
     clickListener={false}
     elementId={replyKey}
     />
+  <a class="status-favs-reblogs status-replies"
+     rel="prefetch"
+     href="/statuses/{originalStatusId}"
+     aria-label={repliesLabel}>
+    <span>{numReplies}</span>
+  </a>
   <IconButton
     label={reblogLabel}
-    pressedLabel="Unboost"
+    pressedLabel="{intl.unreblog}"
     pressable={!reblogDisabled}
     pressed={reblogged}
     checked={reblogged}
@@ -21,6 +29,12 @@
     elementId={reblogKey}
     ref:reblogIcon
   />
+  <a class="status-favs-reblogs status-reblogs"
+     rel="prefetch"
+     href="/statuses/{originalStatusId}/reblogs"
+     aria-label={reblogsLabel}>
+    <span>{numReblogs}</span>
+  </a>
   <IconButton
     label="{intl.favorite}"
     pressedLabel="{intl.unfavorite}"
@@ -32,6 +46,12 @@
     elementId={favoriteKey}
     ref:favoriteIcon
     />
+    <a class="status-favs-reblogs status-favs"
+    rel="prefetch"
+    href="/statuses/{originalStatusId}/favorites"
+    aria-label={favoritesLabel}>
+   <span>{numFavs}</span>
+  </a>
   <IconButton
     label="{intl.moreOptions}"
     href="#fa-ellipsis-h"
@@ -57,9 +77,40 @@
     margin-left: 63px; /* offset to align all toolbar items: 48px avatar + 15px margin-right */
   }
 
+  .status-favs-reblogs {
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%; /* easiest way to move the counts next to the icon button */
+    pointer-events: auto;
+  }
+
+  .status-favs-reblogs span {
+    margin-left: 5px;
+  }
+
+  .status-favs-reblogs,
+  .status-favs-reblogs:hover,
+  .status-favs-reblogs:visited {
+    color: var(--deemphasized-text-color);
+  }
+
+  :global(.status-favs-reblogs-svg) {
+    fill: var(--deemphasized-text-color);
+    width: 18px;
+    height: 18px;
+  }
+
   @media (max-width: 767px) {
     .status-toolbar.status-in-own-thread {
       margin-left: 53px; /* offset to align all toolbar items: 48px avatar + 5px margin-right */
+    }
+  }
+
+  @media (max-width: 479px) {
+    .status-favs-reblogs {
+      font-size: 1em;
     }
   }
 
@@ -83,6 +134,7 @@
   import { on } from '../../_utils/eventBus.js'
   import { announceAriaLivePolite } from '../../_utils/announceAriaLivePolite.js'
   import { setStatusBookmarkedOrUnbookmarked } from '../../_actions/bookmark.js'
+  import { formatIntl } from '../../_utils/formatIntl.js'
 
   export default {
     oncreate () {
@@ -184,13 +236,32 @@
     },
     data: () => ({
       favoriteAnimation: FAVORITE_ANIMATION,
-      reblogAnimation: REBLOG_ANIMATION
+      reblogAnimation: REBLOG_ANIMATION,
+      overrideNumReblogs: undefined,
+      overrideNumFavs: undefined,
+      overrideNumReplies: undefined
     }),
     computed: {
       replyLabel: ({ inReplyToId }) => (
         inReplyToId ? 'intl.replyToThread' : 'intl.reply'
       ),
       replyIcon: ({ inReplyToId }) => inReplyToId ? '#fa-reply-all' : '#fa-reply',
+      numReplies: ({ $disableReplyCounts, overrideNumReplies, originalStatus }) => {
+        if ($disableReplyCounts) {
+          return ''
+        }
+        if (typeof overrideNumReplies === 'number') {
+          return overrideNumReplies
+        }
+        return originalStatus.replies_count || ''
+      },
+      repliesLabel: ({ $disableReplyCounts, numReplies }) => {
+        if ($disableReplyCounts) {
+          return 'intl.replyCountsHidden'
+        }
+        if (numReplies > 0)
+          return formatIntl('intl.replyCount', { count: numReplies })
+      },
       reblogLabel: ({ visibility }) => {
         switch (visibility) {
           case 'private':
@@ -220,11 +291,41 @@
         }
         return originalStatus.reblogged
       },
+      numReblogs: ({ $disableReblogCounts, overrideNumReblogs, originalStatus }) => {
+        if ($disableReblogCounts) {
+          return ''
+        }
+        if (typeof overrideNumReblogs === 'number') {
+          return overrideNumReblogs
+        }
+        return originalStatus.reblogs_count || ''
+      },
+      reblogsLabel: ({ $disableReblogCounts, numReblogs }) => {
+        if ($disableReblogCounts) {
+          return 'intl.reblogCountsHidden'
+        }
+        return formatIntl('intl.rebloggedTimes', { count: numReblogs })
+      },
       favorited: ({ originalStatusId, $currentStatusModifications, originalStatus }) => {
         if ($currentStatusModifications && originalStatusId in $currentStatusModifications.favorites) {
           return $currentStatusModifications.favorites[originalStatusId]
         }
         return originalStatus.favourited
+      },
+      numFavs: ({ $disableFavCounts, overrideNumFavs, originalStatus }) => {
+        if ($disableFavCounts) {
+          return ''
+        }
+        if (typeof overrideNumFavs === 'number') {
+          return overrideNumFavs
+        }
+        return originalStatus.favourites_count || ''
+      },
+      favoritesLabel: ({ $disableFavCounts, numFavs }) => {
+        if ($disableFavCounts) {
+          return 'intl.favoriteCountsHidden'
+        }
+        return formatIntl('intl.favoritedTimes', { count: numFavs })
       },
       favoriteKey: ({ uuid }) => `fav-${uuid}`,
       reblogKey: ({ uuid }) => `reblog-${uuid}`,

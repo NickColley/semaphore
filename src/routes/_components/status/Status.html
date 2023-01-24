@@ -12,7 +12,7 @@
   {/if}
   <StatusAuthorName {...params} />
   <StatusAuthorHandle {...params} />
-  {#if !isStatusInOwnThread}
+  {#if true || !isStatusInOwnThread}
     <StatusRelativeDate {...params} {...timestampParams} />
   {/if}
   <StatusSidebar {...params} />
@@ -87,19 +87,19 @@
 
   .status-article.status-in-own-thread {
     grid-template-areas:
-      "sidebar     author-name"
-      "sidebar     author-handle"
-      "spoiler     spoiler"
-      "spoiler-btn spoiler-btn"
-      "mentions    mentions"
-      "content     content"
-      "card        card"
-      "media-grp   media-grp"
-      "media       media"
-      "poll        poll"
-      "details     details"
-      "toolbar     toolbar"
-      "compose     compose";
+      "sidebar     author-name    relative-date"
+      "sidebar     author-handle  author-handle"
+      "spoiler     spoiler        spoiler"
+      "spoiler-btn spoiler-btn    spoiler-btn"
+      "mentions    mentions       mentions"
+      "content     content        content"
+      "card        card           card"
+      "media-grp   media-grp      media-grp"
+      "media       media          media"
+      "poll        poll           poll"
+      "details     details        details"
+      "toolbar     toolbar        toolbar"
+      "compose     compose        compose";
     grid-template-columns: min-content 1fr;
     grid-template-rows: repeat(7, max-content);
   }

@@ -397,6 +397,7 @@ export default {
   enableAll: 'Enable all',
   metrics: 'Metrics',
   hideFollowerCount: 'Hide follower counts (capped at 10)',
+  hideReplyCount: 'Hide reply counts',
   hideReblogCount: 'Hide boost counts',
   hideFavoriteCount: 'Hide favorite counts',
   hideUnread: 'Hide unread notifications count (i.e. the red dot)',
@@ -498,8 +499,13 @@ export default {
   accountSignedUp: '{name} signed up, {account}',
   accountRequestedFollow: '{name} requested to follow you, {account}',
   accountReported: '{name} filed a report, {account}',
+  replyCountsHidden: 'Reply counts hidden',
   reblogCountsHidden: 'Boost counts hidden',
   favoriteCountsHidden: 'Favorite counts hidden',
+  replyCount: `{count, plural,
+    one {1 reply}
+    other {{count} replies}
+  }`,
   rebloggedTimes: `Boosted {count, plural,
     one {1 time}
     other {{count} times}
@@ -579,6 +585,7 @@ export default {
   cannotReblogFollowersOnly: 'Cannot be boosted because this is followers-only',
   cannotReblogDirectMessage: 'Cannot be boosted because this is a direct message',
   reblog: 'Boost',
+  unreblog: 'Unboost',
   reply: 'Reply',
   replyToThread: 'Reply to thread',
   favorite: 'Favorite',

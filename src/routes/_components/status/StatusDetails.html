@@ -27,20 +27,6 @@
       </span>
     {/if}
   {/if}
-  <a class="status-favs-reblogs status-reblogs"
-     rel="prefetch"
-     href="/statuses/{originalStatusId}/reblogs"
-     aria-label={reblogsLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-retweet" />
-    <span>{numReblogs}</span>
-  </a>
-  <a class="status-favs-reblogs status-favs"
-     rel="prefetch"
-     href="/statuses/{originalStatusId}/favorites"
-     aria-label={favoritesLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-star" />
-    <span>{numFavs}</span>
-  </a>
 </div>
 <style>
   .status-details {
@@ -87,38 +73,12 @@
     text-overflow: ellipsis;
   }
 
-  .status-favs-reblogs {
-    font-size: 1.1em;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .status-favs-reblogs span {
-    margin-left: 5px;
-  }
-
-  .status-favs-reblogs,
-  .status-favs-reblogs:hover,
-  .status-favs-reblogs:visited {
-    color: var(--deemphasized-text-color);
-  }
-
-  :global(.status-favs-reblogs-svg) {
-    fill: var(--deemphasized-text-color);
-    width: 18px;
-    height: 18px;
-  }
-
   :global(.status-absolute-date, .status-absolute-date:hover, .status-absolute-date:visited) {
     color: var(--deemphasized-text-color);
   }
 
   @media (max-width: 479px) {
     :global(.status-absolute-date) {
-      font-size: 1em;
-    }
-    .status-favs-reblogs {
       font-size: 1em;
     }
     :global(.status-application) {
@@ -147,7 +107,8 @@
         if (status.id === originalStatusId) {
           this.set({
             overrideNumReblogs: status.reblogs_count || 0,
-            overrideNumFavs: status.favourites_count || 0
+            overrideNumFavs: status.favourites_count || 0,
+            overrideNumReplies: status.replies_count || 0
           })
         }
       })
@@ -155,7 +116,8 @@
     store: () => store,
     data: () => ({
       overrideNumReblogs: undefined,
-      overrideNumFavs: undefined
+      overrideNumFavs: undefined,
+      overrideNumReplies: undefined
     }),
     computed: {
       editedAt: ({ originalStatus }) => originalStatus.edited_at,
@@ -163,39 +125,9 @@
       application: ({ originalStatus }) => originalStatus.application,
       applicationName: ({ application }) => (application && application.name),
       applicationWebsite: ({ application }) => (application && application.website),
-      numReblogs: ({ $disableReblogCounts, overrideNumReblogs, originalStatus }) => {
-        if ($disableReblogCounts) {
-          return 0
-        }
-        if (typeof overrideNumReblogs === 'number') {
-          return overrideNumReblogs
-        }
-        return originalStatus.reblogs_count || 0
-      },
-      numFavs: ({ $disableFavCounts, overrideNumFavs, originalStatus }) => {
-        if ($disableFavCounts) {
-          return 0
-        }
-        if (typeof overrideNumFavs === 'number') {
-          return overrideNumFavs
-        }
-        return originalStatus.favourites_count || 0
-      },
       displayAbsoluteFormattedDate: ({ createdAtDateTS, $isMobileSize }) => (
         ($isMobileSize ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(createdAtDateTS)
       ),
-      reblogsLabel: ({ $disableReblogCounts, numReblogs }) => {
-        if ($disableReblogCounts) {
-          return 'intl.reblogCountsHidden'
-        }
-        return formatIntl('intl.rebloggedTimes', { count: numReblogs })
-      },
-      favoritesLabel: ({ $disableFavCounts, numFavs }) => {
-        if ($disableFavCounts) {
-          return 'intl.favoriteCountsHidden'
-        }
-        return formatIntl('intl.favoritedTimes', { count: numFavs })
-      },
       externalLinkLabel: ({ displayAbsoluteFormattedDate }) => (
         formatIntl('intl.opensInNewWindow', { label: displayAbsoluteFormattedDate })
       ),
@@ -204,8 +136,7 @@
       )
     },
     components: {
-      ExternalLink,
-      SvgIcon
+      ExternalLink
     }
   }
 </script>
