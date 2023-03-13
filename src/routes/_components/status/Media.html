@@ -217,7 +217,7 @@ export default {
         formatIntl('intl.animatedImage', { description })
       ),
       altLabel: ({ index }) => (
-        formatIntl('intl.altMediaAriaLabel', { number : index + 1 })
+        formatIntl('intl.altMediaAriaLabel', { number: index + 1 })
       )
     },
     methods: {
@@ -232,8 +232,8 @@ export default {
       handleAltClick (event) {
         (async () => {
           const { mediaAttachments, index } = this.get()
-          const media = mediaAttachments[index];
-          const { description } = media;
+          const media = mediaAttachments[index]
+          const { description } = media
           const showMediaAltDialog = await importShowMediaAltDialog()
           showMediaAltDialog(description)
         })()
