@@ -49,8 +49,8 @@ export default {
       }}
       community {{count, plural,
         =0 {}
-        one {(1 demande de suivre)}
-        other {({count} demandes de suivre)}
+        one {(1 demande de vous suivre)}
+        other {({count} demandes de vous suivre)}
       }}
       other {}
     }
@@ -102,16 +102,16 @@ export default {
   hashtag: 'Mot-dièse',
   // not logged in
   profileNotLoggedIn: "Un historique d'utilisateur apparait ici quand on est connecté.",
-  bookmarksNotLoggedIn: "Vos signets s'apparêtront ici quand on est connecté.",
-  directMessagesNotLoggedIn: "Vos messages directs apparaissent ici quand on est connecté.",
-  favoritesNotLoggedIn: "Vos favoris apparaissent ici quand on est connecté.",
+  bookmarksNotLoggedIn: "Vos signets apparaissent ici quand vous êtes connecté.",
+  directMessagesNotLoggedIn: "Vos messages directs apparaissent ici quand vous êtes connecté.",
+  favoritesNotLoggedIn: "Vos favoris apparaissent ici quand vous connecté.",
   federatedTimelineNotLoggedIn: "L'historique fédéré apparait ici quand on est connecté.",
   localTimelineNotLoggedIn: "L'historique local apparait ici quand on est connecté.",
-  searchNotLoggedIn: "On peut faire rechercher dès qu'on est connecté.",
+  searchNotLoggedIn: "On peut faire rechercher dès que l'on est connecté.",
   communityNotLoggedIn: "Les paramètres de commnautés apparaissent ici quand on est connecté.",
   listNotLoggedIn: "Une liste apparait ici dès qu'on est connecté.",
   notificationsNotLoggedIn: "Vos notifications apparaissent ici quand on est connecté.",
-  notificationMentionsNotLoggedIn: "Vos notifications de mention apparaisse ici quand on est connecté.",
+  notificationMentionsNotLoggedIn: "Vos notifications de mention apparaissent ici quand vous êtes connecté.",
   statusNotLoggedIn: "Un historique de pouet apparait ici quand on est connecté.",
   tagNotLoggedIn: "Un historique de hastag apparait ici quand on est connecté.",
   // Notification subpages
@@ -144,7 +144,7 @@ export default {
     </li>
     <li><kbd>7</kbd> or <kbd>c</kbd> pour écrire un nouveau pouet</li>
     <li><kbd>s</kbd> or <kbd>/</kbd> pour rechercher</li>
-    <li><kbd>g</kbd> + <kbd>h</kbd> pour renter à l'acceuil</li>
+    <li><kbd>g</kbd> + <kbd>h</kbd> pour revenir à l'acceuil</li>
     <li><kbd>g</kbd> + <kbd>n</kbd> pour voir les notifications</li>
     <li><kbd>g</kbd> + <kbd>l</kbd> pour voir l'historique local</li>
     <li><kbd>g</kbd> + <kbd>t</kbd> pour voir l'historique fédéré</li>
@@ -422,7 +422,7 @@ export default {
   notificationFilters: 'Filtres de notifications',
   pushNotifications: 'Filtres de notifications push',
   // Add instance page
-  storageError: `Il semble que Semaphore ne peut pas stocker les données en locale. Est-ce que votre navigateur
+  storageError: `Il semble que Semaphore ne peut pas stocker les données en local. Est-ce que votre navigateur
           est en mode privé, ou est-ce qu'il bloque les cookies? Semaphore garde tous ses données en locale et
           ne peut pas fonctionner sans LocalStorage ou IndexedDB.`,
   javaScriptError: 'Le JavaScript devrait être activé pour continuer.',
@@ -613,14 +613,14 @@ export default {
   unableToUnpinStatus: 'Impossible de ne plus épingler: {error}',
   unableToRefreshPoll: 'Impossible de recharger: {error}',
   unableToVoteInPoll: 'Impossible de voter: {error}',
-  cannotReblogOffline: 'Vous ne pouvez pas partager car vous êtes hors de connexion.',
-  cannotUnreblogOffline: 'Vous ne pouvez pas ne plus partager car vous êtes hors de connexion.',
+  cannotReblogOffline: 'Vous ne pouvez pas partager car vous êtes pas déconnecté.',
+  cannotUnreblogOffline: 'Vous ne pouvez pas ne plus partager car vous êtes déconnecté.',
   failedToReblog: 'Impossible de partager: {error}',
   failedToUnreblog: 'Impossible de ne plus partager: {error}',
   submittedReport: 'Report signalé',
   failedToReport: 'Impossible de signaler: {error}',
-  approvedFollowRequest: 'Demande de suivre approuvée',
-  rejectedFollowRequest: 'Demande de suivre rejetée',
+  approvedFollowRequest: 'Demande de suivie approuvée',
+  rejectedFollowRequest: 'Demande de suivie rejetée',
   unableToApproveFollowRequest: "Impossible d'appouver: {error}",
   unableToRejectFollowRequest: 'Impossible de rejeter: {error}',
   searchError: 'Erreur de recherche: {error}',
@@ -629,12 +629,12 @@ export default {
   unableToHideDomain: 'Impossible de cacher le domaine: {error}',
   unableToUnhideDomain: 'Impossible de ne plus cacher le domaine: {error}',
   showingReblogs: 'Partages affichés',
-  hidingReblogs: 'Partages ne plus affichés',
+  hidingReblogs: 'Ne plus afficher les partages',
   unableToShowReblogs: "Impossible d'afficher les partages: {error}",
   unableToHideReblogs: 'Impossible de ne plus afficher les partages: {error}',
-  unableToShare: 'Impossible de partager externellement: {error}',
-  showingOfflineContent: "Requête d'internet impossible. Contenu hors de connexion affiché.",
-  youAreOffline: 'Il semble que vous êtes hors de connextion. Vous pouvez toujours lire les pouets dans cet état.',
+  unableToShare: 'Impossible de partager : {error}',
+  showingOfflineContent: "Requête d'internet impossible. Contenu hors connexion affiché.",
+  youAreOffline: 'Il semble que vous êtes déconnecté. Vous pouvez toujours lire les pouets dans cet état.',
   // Snackbar UI
   updateAvailable: 'Mise à jour disponible.',
   // Details
