@@ -1,3 +1,8 @@
+
+> [!IMPORTANT]
+> Semaphore is no longer supported, the [semaphore.social](https://semaphore.social) domain is now forwarded to [semaphore-social.vercel.app](https://semaphore-social.vercel.app) to avoid paying for domain costs.
+> You can consider using the original [pinafore.social](https://pinafore.social) as an alternative.
+
 <img height="100" width="100" src="https://user-images.githubusercontent.com/2445413/213867232-8bd90121-8812-446e-8c2f-d4000388d449.png" alt=""/> 
 
 # Semaphore
